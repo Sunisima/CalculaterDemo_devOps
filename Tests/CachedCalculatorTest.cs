@@ -18,12 +18,24 @@ public class CachedCalculatorTest
         // Assert
         Assert.That(result, Is.EqualTo(5));
     }
-    
+
+    [Test]
+    public void Use_Cache_when_add_is_called_twice_with_same_values()
+    {
+        // Arrange
+        var calc = new CachedCalculator();
+        calc.Add(2, 3);
+        calc.Add(2, 3);
+
+        // Act & Assert
+        Assert.That(calc._cache.Count, Is.EqualTo(1));
+    }
+
     [Test]
     public void Subtract()
     {
         //Arrange
-        var calc = new SimpleCalculator();
+        var calc = new CachedCalculator();
         var a = 7;
         var b = 5;
         
@@ -38,7 +50,7 @@ public class CachedCalculatorTest
     public void Multiply()
     {
         //Arrange
-        var calc = new SimpleCalculator();
+        var calc = new CachedCalculator();
         var a = 55;
         var b = 50;
         
@@ -79,6 +91,18 @@ public class CachedCalculatorTest
     }
     
     [Test]
+    public void Use_Cache_when_Factorial_is_called_twice_with_same_values()
+    {
+        // Arrange
+        var calc = new CachedCalculator();
+        calc.Factorial(6);
+        calc.Factorial(6);
+
+        // Act & Assert
+        Assert.That(calc._cache.Count, Is.EqualTo(1));
+    }
+    
+    [Test]
     public void IsPrime()
     {
         //Arrange
@@ -90,5 +114,29 @@ public class CachedCalculatorTest
         
         //Assert
         Assert.That(result, Is.EqualTo(true));
+    }
+    
+    [Test]
+    public void Use_Cache_when_IsPrime_is_called_twice_with_same_values()
+    {
+        // Arrange
+        var calc = new CachedCalculator();
+        calc.IsPrime(8);
+        calc.IsPrime(8);
+
+        // Act & Assert
+        Assert.That(calc._cache.Count, Is.EqualTo(1));
+    }
+
+    [Test]
+    public void Calculation_with_different_inputValues_should_create_two_entries()
+    {
+        //Arrange
+        var calc = new CachedCalculator();
+        calc.Add(3, 5);
+        calc.Add(111, 6);
+        
+        //Act & Assert
+        Assert.That(calc._cache.Count, Is.EqualTo(2));
     }
 }
