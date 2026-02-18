@@ -22,8 +22,8 @@ jobs:
         run: |
           dotnet sonarscanner begin \
             /k:"lou_Calculator_SonarQube_Demo" \
-            /d:sonar.host.url="http://62.164.217.208:9000/" \
-            /d:sonar.token="sqp_f37ef9eb63490602d905693e1a28a3e4a8f13068" \
+            /d:sonar.host.url="`${{ vars.URL_VAR }}`" \
+            /d:sonar.token="`${{ secrets.PASSWORD_SEC }}`" \
             /d:sonar.coverageReportPaths="coverage-report/SonarQube.xml" \
             /d:sonar.qualitygate.wait=true \
             /d:sonar.qualitygate.timeout=300
